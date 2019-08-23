@@ -7,5 +7,4 @@ Supports Liveview, Still Pictures and Zooming.
 Note: Images are NOT copied over to the device.
 
 You need to make modifications to the code for this to work with your camera!
-Check Connection.kt for modifications that must be made.
-WiFi Network, Password and IP Address of camera must be manually set.
+Check Connection.kt for modifications that must be made - WiFi Network, Password and IP Address of camera must be manually set.
