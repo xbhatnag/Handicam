@@ -2,7 +2,7 @@
 
 ![Icon - Rounded](https://user-images.githubusercontent.com/14666061/63613295-6cb08580-c5ae-11e9-8b72-ed8f12bf9318.png)
 
-Handicam is an Android app for Remote Control of Sony ICLE-6000
+Handicam is an Android app for Remote Control of the Sony ICLE-6000 (a6000) camera over WiFi
 
 ## Features
 
