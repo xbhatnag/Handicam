@@ -26,10 +26,17 @@ import java.nio.ByteOrder
 
 
 object Connection {
-    private val CameraIP = "<Insert Camera IP>"
-    private val CameraEndpoint = "http://$CameraIP:8080/sony/camera"
+    // MAKE ALL YOUR CHANGES HERE.
+    // Activate the "Smart Remote App" on your Sony camera.
+    // Copy the WiFi Network and Password as displayed on the camera.
+    // Get the IP Address of the camera by manually connecting to the WiFi.
+    // The IP Address remains fixed, so this is not a problem.
+    // The quotes around the SSID and PSK are necessary. DO NOT REMOVE THEM.
     private val CameraSSID = "\"<Insert Camera WiFi Network Name>\""
-    private val CameraPSK = "\"<Insert Camera WiFi Netowrk Password>\""
+    private val CameraPSK = "\"<Insert Camera WiFi Network Password>\""
+    private val CameraIP = "<Insert Camera IP>"
+
+    private val CameraEndpoint = "http://$CameraIP:8080/sony/camera"
     private var networkId = -1
     private lateinit var client: OkHttpClient
 
