@@ -62,10 +62,24 @@ object Connection {
         return response
     }
 
-    fun waitUntilCorrectWifiId(wifiManager: WifiManager) {
-        // Wait until the WiFi has the correct ID
-        while (wifiManager.connectionInfo.networkId != networkId || wifiManager.connectionInfo.supplicantState != SupplicantState.COMPLETED) {
-            // Infinite loop until WiFi is connected
+    fun establishConnection(wifiManager: WifiManager, networkId: Int) {
+        while (true) {
+            // Attempt to disconnect from the current network
+            val disconnectSuccess = wifiManager.disconnect()
+            require(disconnectSuccess)
+
+            // Attempt to connect to our network
+            val enableSuccess = wifiManager.enableNetwork(networkId, true)
+            require(enableSuccess)
+
+            val reconnectSuccess = wifiManager.reconnect()
+            require(reconnectSuccess)
+
+            // Wait until you are connected to a network
+            while (wifiManager.connectionInfo.supplicantState != SupplicantState.COMPLETED) { }
+            if (wifiManager.connectionInfo.networkId == networkId) {
+                break
+            }
         }
     }
 
@@ -93,22 +107,8 @@ object Connection {
             preSharedKey = CameraPSK
         }
         networkId = wifiManager.addNetwork(wifiConfig)
-        require(networkId > -1)
-
-        // Check the current network connection
-        val currentConnection = wifiManager.connectionInfo
-
-        // Either we are not connected to the correct network or the connection has not been established completely
-        if (currentConnection.networkId != networkId || currentConnection.supplicantState != SupplicantState.COMPLETED) {
-            // Attempt to connect to our network
-            val enableSuccess = wifiManager.enableNetwork(networkId, true)
-            require(enableSuccess)
-
-            val reconnectSuccess = wifiManager.reconnect()
-            require(reconnectSuccess)
-        }
-
-        waitUntilCorrectWifiId(wifiManager)
+        require(networkId != -1)
+        establishConnection(wifiManager, networkId)
         val network = waitUntilConnected(connManager)
         connManager.bindProcessToNetwork(network)
         client = OkHttpClient.Builder().socketFactory(network.socketFactory).build()
